@@ -12,7 +12,11 @@ runs:
   # Defining the action steps(Just one step to be simple)
   steps:
   - name: git pull
+    run: |
       cd /mnt/efs/KEDL
       git config --global --add safe.directory /mnt/efs/KEDL
       git remote set-url origin https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/KeyCore/KEDL.git
-      git pull
+      if [ $(git status --porcelain |  grep -v '??' | wc -l) -eq "0" ]; then
+        git pull
+      fi
+
