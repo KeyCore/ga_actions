@@ -1,0 +1,18 @@
+name: pull
+
+# Were we can define the inputs that our action will accept
+inputs:
+  version: 
+    required: true
+  namespace:
+    required: true
+
+runs:
+  using: "composite"
+  # Defining the action steps(Just one step to be simple)
+  steps:
+  - name: git pull
+      cd /mnt/efs/KEDL
+      git config --global --add safe.directory /mnt/efs/KEDL
+      git remote set-url origin https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/KeyCore/KEDL.git
+      git pull
