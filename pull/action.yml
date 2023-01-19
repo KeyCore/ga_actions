@@ -1,21 +1,24 @@
 name: pull
 
-# Were we can define the inputs that our action will accept
 inputs:
-  version: 
+  gh_user: 
     required: true
-  namespace:
+  gh_token:
+    required: true
+  gh_org:
+    required: true
+  gh_repo:
     required: true
 
 runs:
   using: "composite"
-  # Defining the action steps(Just one step to be simple)
   steps:
   - name: git pull
+    shell: bash
     run: |
-      cd /mnt/efs/KEDL
-      git config --global --add safe.directory /mnt/efs/KEDL
-      git remote set-url origin https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/KeyCore/KEDL.git
+      cd /mnt/efs/${{ inputs.gh_repo }}
+      git config --global --add safe.directory /mnt/efs/${{ inputs.gh_repo }}
+      git remote set-url origin https://${{ inputs.gh_user }}:${{ inputs.gh_token }}@github.com/${{ inputs.gh_org }}/${{ inputs.gh_repo }}.git
       if [ $(git status --porcelain |  grep -v '??' | wc -l) -eq "0" ]; then
         git pull
       fi
