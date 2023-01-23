@@ -18,4 +18,4 @@ runs:
     run: |
       cd /mnt/efs 
       # git config --global --add safe.directory /mnt/efs/.cargo/registry/index/github.com-1ecc6299db9ec823/.git
-      git clone https://${{ inputs.gh_user }}:${{ inputs.gh_token }}@github.com/${{ inputs.gh_org }}/${{ inputs.gh_repo }}.w
+      git clone https://${{ inputs.gh_user }}:${{ inputs.gh_token }}@github.com/${{ inputs.gh_org }}/${{ inputs.gh_repo }}
