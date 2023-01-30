@@ -1,4 +1,4 @@
-name: s3store
+name: s3copy
 
 inputs:
   source: 
@@ -11,7 +11,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - name: s3 store
+  - name: s3 copy
     shell: bash
     run: |
       cd /mnt/efs/${{ inputs.gh_repo }}
