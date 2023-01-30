@@ -14,3 +14,4 @@ uses: KeyCore/ga_actions/pull@master
 Currently there are actions for:
 - git clone
 - git pull
+- s3 copy
