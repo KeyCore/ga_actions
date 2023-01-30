@@ -15,4 +15,4 @@ runs:
     shell: bash
     run: |
       cd /mnt/efs/${{ inputs.gh_repo }}
-      aws s3 cp ${{ inputs.source }} ${{ inputs.destination }}
+      aws s3 cp ${{ inputs.source }} ${{ inputs.destination }}.${{ github.run_number }}
