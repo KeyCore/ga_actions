@@ -8,4 +8,4 @@ runs:
     run: |
         echo "******** Exiting ********"
         PID=`ps -ef | grep run.sh | grep -v grep | sed 's/  */:/g' | cut -d: -f 2` 
-        kill -9 $PID
+        kill $PID
