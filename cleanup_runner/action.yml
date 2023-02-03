@@ -15,5 +15,5 @@ runs:
         TOKEN=`echo $RES | jq .token | tr -d '"'`
         cd /tmp
         ./config.sh remove --token $TOKEN
-
+        exit 0
         # kill -9 $PID
