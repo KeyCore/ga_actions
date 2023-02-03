@@ -8,4 +8,12 @@ runs:
     run: |
         echo "******** Exiting ********"
         PID=`ps -ef | grep run.sh | grep -v grep | sed 's/  */:/g' | cut -d: -f 2` 
-        kill -9 $PID
+        GHTOKEN=`aws secretsmanager get-secret-value --secret-id GHToken | jq .SecretString | tr -d '"'`
+        echo "GHTOKEN $GHTOKEN" 1>&2
+        RES=`curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: token $GHTOKEN" https://api.github.com/orgs/KeyCore/actions/runners/remove-token`
+        echo "RES $RES" 1>&2
+        TOKEN=`echo $RES | jq .token | tr -d '"'`
+        cd /tmp
+        ./config.sh remove --token $TOKEN
+
+        # kill -9 $PID
