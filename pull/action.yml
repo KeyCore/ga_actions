@@ -17,9 +17,9 @@ runs:
     shell: bash
     run: |
       cd /mnt/efs/${{ inputs.gh_repo }}
-      echo "HR ${{ github.head_ref }}"
-      if [[ ! -f "pull.${{ github.head_ref }}" ]]; then
-        touch "pull.${{ github.head_ref }}"
+      echo "HR ${{ github.sha }}"
+      if [[ ! -f "pull.${{ github.sha }}" ]]; then
+        touch "pull.${{ github.sha }}"
         git config --global --add safe.directory /mnt/efs/${{ inputs.gh_repo }}
         git remote set-url origin https://${{ inputs.gh_user }}:${{ inputs.gh_token }}@github.com/${{ inputs.gh_org }}/${{ inputs.gh_repo }}.git
         git status --porcelain 1>&2
