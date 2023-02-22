@@ -17,7 +17,8 @@ runs:
     shell: bash
     run: |
       cd /mnt/efs/${{ inputs.gh_repo }}
-      if [[ -f "pull.${{ github.run_number }}" ]]; then
+      if [[ ! -f "pull.${{ github.run_number }}" ]]; then
+        touch "pull.${{ github.run_number }}"
         git config --global --add safe.directory /mnt/efs/${{ inputs.gh_repo }}
         git remote set-url origin https://${{ inputs.gh_user }}:${{ inputs.gh_token }}@github.com/${{ inputs.gh_org }}/${{ inputs.gh_repo }}.git
         git status --porcelain 1>&2
@@ -32,6 +33,6 @@ runs:
         fi
         echo "END PULL" 1>&2
       else
-        touch "pull.${{ github.run_number }}"
+        echo "NO PULL" 1>&2
       fi
 
