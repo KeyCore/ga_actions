@@ -19,7 +19,7 @@ runs:
       cd /mnt/efs/${{ inputs.gh_repo }}
       echo "HR ${{ github.sha }}"
       if [[ ! -f "pull.${{ github.sha }}" ]]; then
-        ls -l "pull.${{ github.sha }}"
+        ls -l "pull.${{ github.sha }}" 1>&2
         touch "pull.${{ github.sha }}"
         chmod 777 "pull.${{ github.sha }}"
         git config --global --add safe.directory /mnt/efs/${{ inputs.gh_repo }}
