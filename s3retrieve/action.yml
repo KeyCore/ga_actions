@@ -17,7 +17,7 @@ runs:
     shell: bash
     run: |
       cd /mnt/efs/${{ inputs.gh_repo }}
-      if [[ ${{ -z inputs.run_nr }} ]]; then
+      if [[ -z ${{ inputs.run_nr }} ]]; then
         aws s3 cp ${{ inputs.source }}.${{ github.run_number }} ${{ inputs.destination }} 
       else
         aws s3 cp ${{ inputs.source }}.${{ inputs.run_nr }} ${{ inputs.destination }} 
