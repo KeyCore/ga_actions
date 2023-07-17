@@ -25,7 +25,7 @@ runs:
         # touch "/mnt/efs/pull.${{ github.sha }}"
         #chmod 777 "/mnt/efs/pull.${{ github.sha }}"
         git config --global --add safe.directory /mnt/efs/${{ inputs.gh_repo }}
-        git config pull.rebase false
+        git config pull.rebase true
         git remote set-url origin https://${{ inputs.gh_user }}:${{ inputs.gh_token }}@github.com/${{ inputs.gh_org }}/${{ inputs.gh_repo }}.git
         git status --porcelain 1>&2
         if [ $(git status --porcelain |  grep -v '??'  | wc -l) -eq 0 ]; then
