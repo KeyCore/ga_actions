@@ -29,7 +29,7 @@ runs:
         git status --porcelain 1>&2
         if [ $(git status --porcelain |  grep -v '??'  | wc -l) -eq 0 ]; then
           echo "PULL" 1>&2
-          git pull origin/master
+          git pull
         fi
         if [ $(git status --porcelain | grep 'D' | wc -l) -gt 0 ]; then
           echo "RESET PULL" 1>&2
