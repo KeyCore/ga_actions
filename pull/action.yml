@@ -15,6 +15,7 @@ runs:
   steps:
   - name: git pull
     shell: bash
+    uses: nick-fields/retry@v2
     with:
       max_attempts: 3
       retry_on: error
