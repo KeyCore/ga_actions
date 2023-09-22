@@ -25,22 +25,16 @@ runs:
       if [ $(git status --porcelain |  grep -v '??'  | wc -l) -eq 0 ]; then
         echo "PULL" 1>&2
         git pull
-        if [[ $? != 0 ]]; then
-          randomNumber=$((2 + $RANDOM % 10))
-          sleep randomNumber
-          git pull
-        fi
       fi
       if [ $(git status --porcelain | grep 'D' | wc -l) -gt 0 ]; then
         echo "RESET PULL" 1>&2
         git reset --hard origin/master
         git pull
-        if [[ $? != 0 ]]; then
-          randomNumber=$((2 + $RANDOM % 10))
-          sleep randomNumber
-          git pull
-        fi
       fi
       echo "END PULL" 1>&2
+    with:
+				max_attempts: 3
+				retry_on: error
+				timeout_seconds: 5
   
 
