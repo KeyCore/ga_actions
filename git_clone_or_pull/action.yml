@@ -1,0 +1,45 @@
+name: git_clone_or_pull
+
+inputs:
+  gh_user: 
+    required: true
+  gh_token:
+    required: true
+  gh_org:
+    required: true
+  gh_repo:
+    required: true
+  git: 
+    required: true
+    default: 'true'
+
+runs:
+  using: "composite"
+  steps:
+  - name: set env GIT if input git empty
+    shell: bash
+    run: |
+      export GIT=`[[ '${{ inputs.git }}' == '' ]] && echo 'true' || echo 'false'`
+      echo "GIT=$GIT" >> $GITHUB_ENV
+  - name: Check file existence
+    if: ${{ inputs.git == true || env.GIT == 'true' }}
+    id: check_files
+    uses: andstor/file-existence-action@v2
+    with:
+      files: "/mnt/efs/KEDL" 
+  - name: pull repo
+    if: ${{ steps.check_files.outputs.files_exists == 'true' && (inputs.git == true || env.GIT == 'true') }}
+    uses: KeyCore/ga_actions/pull@master
+    with:
+      gh_user: ${{ secrets.GH_USER }}
+      gh_token: ${{ secrets.GH_TOKEN      
+      gh_org: ${{ inputs.gh_org }}
+      gh_repo: ${{ inputs.gh_repo }} }}
+  - name: clone repo
+    if: ${{ steps.check_files.outputs.files_exists == 'false' && (inputs.git == true || env.GIT == 'true') }}
+    uses: KeyCore/ga_actions/clone@master
+    with:
+      gh_user: ${{ secrets.GH_USER }}
+      gh_token: ${{ secrets.GH_TOKEN }}
+      gh_org: ${{ inputs.gh_org }}
+      gh_repo: ${{ inputs.gh_repo }}
